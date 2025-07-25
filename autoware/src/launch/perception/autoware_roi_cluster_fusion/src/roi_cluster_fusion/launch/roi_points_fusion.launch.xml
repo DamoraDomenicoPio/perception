@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="roi_points_fusion_node" default="roi_points_fusion"/>
+  <arg name="roi_points_fusion_visualizer_node" default="roi_points_fusion_visualizer"/>
+
+  <arg name="input/lidar" default="/velodyne_points"/>
+  <arg name="input/rois" default="/perception/object_recognition/detection/rois0"/>
+  <arg name="output/rois" default="/perception/object_recognition/detection/rois0_with_cluster"/>
+
+  <arg name="roi_points_fusion_param_path" default="$(find-pkg-share roi_cluster_fusion)/config/roi_points_fusion_node.yaml"/>
+
+  <arg name="debug" default="true"/>
+
+  <node pkg="roi_cluster_fusion" exec="roi_points_fusion_node" name="$(var roi_points_fusion_node)" output="screen">
+    <remap from="~/in/lidar" to="$(var input/lidar)"/>
+    <remap from="~/in/rois" to="$(var input/rois)"/>
+    <remap from="~/out/rois" to="$(var output/rois)"/>
+    <param from="$(var roi_points_fusion_param_path)" allow_substs="true"/>
+  </node>
+
+  <group if="$(var debug)">
+    <node pkg="roi_cluster_fusion" exec="roi_points_fusion_visualizer_node" name="$(var roi_points_fusion_visualizer_node)" output="screen">
+    </node>
+  </group>
+</launch>
