@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <include file="$(find-pkg-share autoware_object_detector)/launch/object_detector.launch.xml"/>
+  <include file="$(find-pkg-share autoware_roi_points_fusion)/launch/roi_points_fusion.launch.xml"/>
+  <!-- <include file="$(find-pkg-share autoware_euclidean_cluster)/launch/voxel_grid_based_euclidean_cluster.launch.xml"/>
+  <include file="$(find-pkg-share autoware_euclidean_cluster)/launch/euclidean_cluster.launch.xml"/> -->
+</launch>
+
