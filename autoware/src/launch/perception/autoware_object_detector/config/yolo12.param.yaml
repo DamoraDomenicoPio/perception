@@ -1,0 +1,5 @@
+/**:
+  ros__parameters:
+    confidence_threshold: 0.3
+    use_gpu: true
+    debug_visualizer: false

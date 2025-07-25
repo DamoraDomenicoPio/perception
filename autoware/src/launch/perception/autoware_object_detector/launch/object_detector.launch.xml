@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="object_detector_node" default="object_detector"/>
+
+  <arg name="data_path" default="$(env HOME)/autoware_data/object_detector" description="packages data and artifacts directory path"/>
+
+  <arg name="input/image" default="/camera/compressed"/>
+  <arg name="output/objects" default="/perception/object_recognition/detection/rois0"/>
+  <arg name="output/image_visualizer" default="/perception/object_recognition/debug/image_visualizer"/>
+
+  <arg name="yolo12_param_path" default="$(find-pkg-share autoware_object_detector)/config/yolo12.param.yaml"/>
+  <arg name="model_path"
+    default="$(var data_path)/models/yolov12n-GPU.onnx"
+  />
+  <arg name="label_path" default="$(var data_path)/labels/coco.names"/>
+  <arg name="autoware_label_path" default="$(var data_path)/labels/autoware.names"/>
+
+  <node pkg="autoware_object_detector" exec="autoware_object_detector_node" name="$(var object_detector_node)" output="screen">
+    <remap from="~/in/image" to="$(var input/image)"/>
+    <remap from="~/out/objects" to="$(var output/objects)"/>
+    <remap from="~/out/image_visualizer" to="$(var output/image_visualizer)"/>
+    <param from="$(var yolo12_param_path)" allow_substs="true"/>
+    <param name="model_path" value="$(var model_path)"/>
+    <param name="label_path" value="$(var label_path)"/>
+    <param name="autoware_label_path" value="$(var autoware_label_path)"/>
+  </node>
+</launch>
